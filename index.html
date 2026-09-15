@@ -1,44 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MAHDIA CARD</title>
+    <title>Little Surprise</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <canvas id="space"></canvas>
+    <!-- =========================
+         SPACE BACKGROUND
+    ========================== -->
+
+    <div class="space">
+
+        <div class="stars"></div>
+        <div class="stars stars-2"></div>
+        <div class="stars stars-3"></div>
+
+        <div class="nebula nebula-1"></div>
+        <div class="nebula nebula-2"></div>
+
+        <div class="shooting-star star-1"></div>
+        <div class="shooting-star star-2"></div>
+        <div class="shooting-star star-3"></div>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN SCENE
+    ========================== -->
 
     <main class="scene">
 
-        <!-- ================= CAT ================= -->
+        <!-- CAT -->
+        <div class="cat" id="cat">
 
-        <div id="cat" class="cat">
+            <div class="cat-ear left-ear"></div>
+            <div class="cat-ear right-ear"></div>
 
-            <div class="ear ear-left"></div>
-            <div class="ear ear-right"></div>
+            <div class="cat-head">
 
-            <div class="face">
+                <div class="eye left-eye"></div>
+                <div class="eye right-eye"></div>
 
-                <div class="eye eye-left">
-                    <span></span>
-                </div>
-
-                <div class="eye eye-right">
-                    <span></span>
-                </div>
-
-                <div class="nose">
-                    ♥
-                </div>
+                <div class="nose"></div>
 
                 <div class="mouth">
-                    ◡
+                    <span></span>
                 </div>
 
                 <div class="whisker w1"></div>
@@ -49,49 +62,73 @@
                 <div class="whisker w5"></div>
                 <div class="whisker w6"></div>
 
-                <div class="tear tear-left"></div>
-                <div class="tear tear-right"></div>
-
             </div>
 
-            <div class="body">
-
-                <div class="paw paw-left"></div>
-                <div class="paw paw-right"></div>
-
-            </div>
+            <!-- PAWS -->
+            <div class="paw paw-left"></div>
+            <div class="paw paw-right"></div>
 
         </div>
 
 
-        <!-- ================= CARD ================= -->
+        <!-- =========================
+             CARD
+        ========================== -->
 
-        <section id="card" class="card">
+        <section class="card-wrapper" id="cardWrapper">
 
-            <div class="card-shine"></div>
+            <div class="card" id="card">
 
-            <div class="card-inner">
+                <!-- FRONT -->
+                <div class="card-front">
 
-                <div class="question-label">
-                    A LITTLE QUESTION...
+                    <div class="card-small-title">
+                        A LITTLE MESSAGE...
+                    </div>
+
+                    <h1>
+                        I'm Sorry,
+                        <span>Mahdia</span>
+                    </h1>
+
+                    <div class="card-line"></div>
+
+                    <p class="front-subtitle">
+                        I made something small for you.
+                    </p>
+
+                    <button id="openButton">
+                        OPEN THE LETTER
+                        <span>→</span>
+                    </button>
+
                 </div>
 
-                <h1>
-                    Will you be<br>
-                    my friend?
-                </h1>
 
-                <div class="divider"></div>
+                <!-- LETTER -->
+                <div class="card-letter" id="letter">
 
-                <div class="buttons">
+                    <div class="letter-glow"></div>
 
-                    <button id="yesBtn" class="yes-btn">
-                        YES <span>💙</span>
-                    </button>
+                    <div class="letter-content">
 
-                    <button id="noBtn" class="no-btn">
-                        NO
-                    </button>
+                        <div class="letter-label">
+                            A LITTLE NOTE
+                        </div>
+
+                        <h2>
+                            I'm Sorry, Mahdia
+                        </h2>
+
+                        <div class="letter-divider"></div>
+
+                        <p id="typedText"></p>
+
+                        <div class="signature" id="signature">
+                            — From someone who cares 💜
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -100,37 +137,52 @@
         </section>
 
 
-        <!-- ================= FINAL ================= -->
+        <!-- =========================
+             FLOATING PARTICLES
+        ========================== -->
 
-        <section id="final" class="final hidden">
+        <div class="particles" id="particles"></div>
+
+    </main>
+
+
+    <!-- =========================
+         FINAL SCREEN
+    ========================== -->
+
+    <div class="final-screen" id="finalScreen">
+
+        <div class="final-glow"></div>
+
+        <div class="final-content">
 
             <div class="final-icon">
-                💙
-            </div>
-
-            <div class="final-hearts">
-                ❤️ &nbsp; 💙
+                ✦
             </div>
 
             <h2>
-                Thank youuu!
+                Thank you for reading.
             </h2>
 
             <p>
-                You made this little cat happy 🥹
+                Sometimes a little surprise
+                can say what words can't.
             </p>
 
-            <div class="restart">
-                CLICK ANYWHERE TO RESTART
+            <div class="final-hearts">
+                💜 ✨ 💜
             </div>
 
-        </section>
+            <button id="restartButton">
+                START AGAIN ↻
+            </button>
 
-    </main>
+        </div>
+
+    </div>
 
 
     <script src="script.js"></script>
 
 </body>
-
 </html>

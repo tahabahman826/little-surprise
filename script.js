@@ -1,652 +1,557 @@
-// =====================================================
-// MAHDIA CARD — WEB EDITION
-// =====================================================
+/* =========================================================
+   LITTLE SURPRISE
+   I'M SORRY — MAHDIA
+   MAIN JAVASCRIPT
+   ========================================================= */
 
-const canvas = document.getElementById("space");
-const ctx = canvas.getContext("2d");
+const cardWrapper = document.getElementById("cardWrapper");
+const openButton = document.getElementById("openButton");
+const typedText = document.getElementById("typedText");
+const signature = document.getElementById("signature");
 
-const cat = document.getElementById("cat");
-const card = document.getElementById("card");
-const finalScreen = document.getElementById("final");
+const finalScreen = document.getElementById("finalScreen");
+const restartButton = document.getElementById("restartButton");
 
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-
-
-// =====================================================
-// VARIABLES
-// =====================================================
-
-let stars = [];
-let meteors = [];
-let particles = [];
-
-let noClicks = 0;
-let noScale = 1;
-
-let sadTimer = null;
-let gameFinished = false;
+const particlesContainer =
+    document.getElementById("particles");
 
 
-// =====================================================
-// CANVAS SIZE
-// =====================================================
+/* =========================================================
+   LETTER TEXT
+   ========================================================= */
 
-function resizeCanvas() {
+const letterText =
+`I know I made a mistake.
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+And I'm truly sorry.
 
-    createStars();
+I never wanted to make you feel bad.
+You mean a lot to me.
+
+Sometimes saying "I'm sorry"
+isn't enough...
+
+So I made this little surprise
+just to say it properly. 💜`;
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let isOpen = false;
+let typingTimer = null;
+
+
+/* =========================================================
+   OPEN LETTER
+   ========================================================= */
+
+openButton.addEventListener("click", openLetter);
+
+
+function openLetter() {
+
+    if (isOpen) return;
+
+    isOpen = true;
+
+    openButton.disabled = true;
+
+    /* Open the 3D card */
+    cardWrapper.classList.add("open");
+
+    /* Magic particles */
+    createMagicBurst();
+
+    /* Start typing after the card opens */
+    setTimeout(() => {
+
+        typeLetter();
+
+    }, 850);
 }
 
-window.addEventListener(
-    "resize",
-    resizeCanvas
-);
+
+/* =========================================================
+   TYPEWRITER
+   ========================================================= */
+
+function typeLetter() {
+
+    typedText.textContent = "";
+
+    let index = 0;
+
+    clearInterval(typingTimer);
+
+    typingTimer = setInterval(() => {
+
+        if (index < letterText.length) {
+
+            typedText.textContent += letterText[index];
+
+            index++;
+
+        } else {
+
+            clearInterval(typingTimer);
+
+            showSignature();
+
+            setTimeout(() => {
+
+                showFinalScreen();
+
+            }, 3500);
+        }
+
+    }, 32);
+}
 
 
-// =====================================================
-// STARS
-// =====================================================
+/* =========================================================
+   SIGNATURE
+   ========================================================= */
 
-function createStars() {
+function showSignature() {
 
-    stars = [];
+    signature.classList.add("visible");
+}
 
-    const amount = Math.min(
-        220,
-        Math.floor(
-            canvas.width *
-            canvas.height /
-            7000
-        )
-    );
+
+/* =========================================================
+   MAGIC PARTICLE BURST
+   ========================================================= */
+
+function createMagicBurst() {
+
+    const amount = window.innerWidth < 600 ? 35 : 65;
 
     for (let i = 0; i < amount; i++) {
 
-        stars.push({
+        const particle =
+            document.createElement("div");
 
-            x:
-                Math.random() *
-                canvas.width,
-
-            y:
-                Math.random() *
-                canvas.height,
-
-            size:
-                Math.random() *
-                1.8 + 0.3,
-
-            alpha:
-                Math.random() *
-                0.7 + 0.2,
-
-            twinkle:
-                Math.random() *
-                0.04 + 0.01
-        });
-    }
-}
-
-
-// =====================================================
-// METEORS
-// =====================================================
-
-function createMeteor() {
-
-    if (meteors.length >= 5) {
-        return;
-    }
-
-    meteors.push({
-
-        x:
-            Math.random() *
-            canvas.width + 200,
-
-        y:
-            Math.random() *
-            canvas.height *
-            0.45,
-
-        length:
-            Math.random() *
-            100 + 60,
-
-        speed:
-            Math.random() *
-            7 + 6,
-
-        alpha: 1
-    });
-}
-
-
-// =====================================================
-// PARTICLES
-// =====================================================
-
-function createParticles(
-    x,
-    y,
-    amount = 40
-) {
-
-    for (let i = 0; i < amount; i++) {
+        particle.className = "particle";
 
         const angle =
-            Math.random() *
-            Math.PI * 2;
+            Math.random() * Math.PI * 2;
 
-        const speed =
-            Math.random() *
-            5 + 1;
+        const distance =
+            80 + Math.random() * 300;
 
-        particles.push({
+        const x =
+            Math.cos(angle) * distance;
 
-            x: x,
-            y: y,
+        const y =
+            Math.sin(angle) * distance;
 
-            vx:
-                Math.cos(angle) *
-                speed,
+        const startX =
+            50 + (Math.random() - .5) * 10;
 
-            vy:
-                Math.sin(angle) *
-                speed,
+        const startY =
+            50 + (Math.random() - .5) * 10;
 
-            life: 1,
+        particle.style.left =
+            startX + "%";
 
-            size:
-                Math.random() *
-                4 + 1
-        });
+        particle.style.top =
+            startY + "%";
+
+        particle.style.width =
+            (2 + Math.random() * 5) + "px";
+
+        particle.style.height =
+            particle.style.width;
+
+        particle.animate(
+            [
+                {
+                    transform:
+                        "translate(-50%, -50%) scale(.2)",
+                    opacity: 0
+                },
+
+                {
+                    transform:
+                        "translate(-50%, -50%) scale(1)",
+                    opacity: 1
+                },
+
+                {
+                    transform:
+                        `translate(
+                            calc(-50% + ${x}px),
+                            calc(-50% + ${y}px)
+                        ) scale(0)`,
+                    opacity: 0
+                }
+            ],
+            {
+                duration:
+                    900 + Math.random() * 1100,
+
+                delay:
+                    Math.random() * 250,
+
+                easing:
+                    "cubic-bezier(.16,1,.3,1)"
+            }
+        );
+
+        particlesContainer.appendChild(particle);
+
+        setTimeout(() => {
+
+            particle.remove();
+
+        }, 2500);
     }
 }
 
 
-// =====================================================
-// DRAW SPACE
-// =====================================================
+/* =========================================================
+   FLOATING HEARTS
+   ========================================================= */
 
-function drawSpace() {
+function createHeart() {
 
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+    const heart =
+        document.createElement("div");
 
+    heart.textContent = "♥";
 
-    // Background
+    heart.style.position = "fixed";
 
-    const gradient =
-        ctx.createRadialGradient(
+    heart.style.left =
+        Math.random() * 100 + "%";
 
-            canvas.width * 0.5,
-            canvas.height * 0.45,
-            0,
+    heart.style.bottom = "-30px";
 
-            canvas.width * 0.5,
-            canvas.height * 0.45,
+    heart.style.fontSize =
+        (12 + Math.random() * 18) + "px";
 
-            Math.max(
-                canvas.width,
-                canvas.height
-            )
-        );
+    heart.style.color =
+        "rgba(195,180,255,.65)";
 
-    gradient.addColorStop(
-        0,
-        "#19124d"
-    );
+    heart.style.pointerEvents =
+        "none";
 
-    gradient.addColorStop(
-        0.45,
-        "#080624"
-    );
+    heart.style.zIndex = "25";
 
-    gradient.addColorStop(
-        1,
-        "#020208"
-    );
+    document.body.appendChild(heart);
 
-    ctx.fillStyle = gradient;
+    const drift =
+        (Math.random() - .5) * 150;
 
-    ctx.fillRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+    heart.animate(
+        [
+            {
+                transform:
+                    "translate(0,0) scale(.6) rotate(0deg)",
+                opacity: 0
+            },
 
+            {
+                transform:
+                    "translate(0,-80px) scale(1) rotate(15deg)",
+                opacity: .8
+            },
 
-    // Stars
+            {
+                transform:
+                    `translate(
+                        ${drift}px,
+                        -${window.innerHeight + 100}px
+                    )
+                    scale(.5)
+                    rotate(-20deg)`,
+                opacity: 0
+            }
+        ],
+        {
+            duration:
+                4500 + Math.random() * 3000,
 
-    for (const star of stars) {
-
-        const glow =
-            0.65 +
-            Math.sin(
-                Date.now() *
-                star.twinkle
-            ) *
-            0.3;
-
-        ctx.globalAlpha = glow;
-
-        ctx.fillStyle = "#ffffff";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            star.x,
-            star.y,
-            star.size,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-    }
-
-    ctx.globalAlpha = 1;
-
-
-    // Meteors
-
-    for (
-        let i = meteors.length - 1;
-        i >= 0;
-        i--
-    ) {
-
-        const meteor =
-            meteors[i];
-
-        meteor.x -= meteor.speed;
-        meteor.y +=
-            meteor.speed * 0.45;
-
-        meteor.alpha -= 0.009;
-
-
-        const meteorGradient =
-            ctx.createLinearGradient(
-
-                meteor.x,
-                meteor.y,
-
-                meteor.x +
-                meteor.length,
-
-                meteor.y -
-                meteor.length * 0.45
-            );
-
-        meteorGradient.addColorStop(
-            0,
-            "rgba(255,255,255,0)"
-        );
-
-        meteorGradient.addColorStop(
-            1,
-            "rgba(170,150,255,0.9)"
-        );
-
-        ctx.strokeStyle =
-            meteorGradient;
-
-        ctx.lineWidth = 2;
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            meteor.x,
-            meteor.y
-        );
-
-        ctx.lineTo(
-            meteor.x +
-            meteor.length,
-
-            meteor.y -
-            meteor.length * 0.45
-        );
-
-        ctx.stroke();
-
-
-        if (
-            meteor.alpha <= 0 ||
-            meteor.x < -300 ||
-            meteor.y >
-                canvas.height + 300
-        ) {
-
-            meteors.splice(i, 1);
+            easing:
+                "ease-out"
         }
-    }
+    );
 
+    setTimeout(() => {
 
-    // Particles
+        heart.remove();
 
-    for (
-        let i = particles.length - 1;
-        i >= 0;
-        i--
-    ) {
-
-        const p =
-            particles[i];
-
-        p.x += p.vx;
-        p.y += p.vy;
-
-        p.vy += 0.035;
-
-        p.life -= 0.018;
-
-        ctx.globalAlpha =
-            Math.max(
-                0,
-                p.life
-            );
-
-        ctx.fillStyle =
-            "#c9baff";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            p.x,
-            p.y,
-            p.size,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        if (p.life <= 0) {
-
-            particles.splice(i, 1);
-        }
-    }
-
-    ctx.globalAlpha = 1;
+    }, 8000);
 }
 
 
-// =====================================================
-// METEOR TIMER
-// =====================================================
+/* Create occasional hearts */
 
 setInterval(() => {
 
-    if (
-        Math.random() <
-        0.65
-    ) {
+    if (!isOpen) return;
 
-        createMeteor();
-    }
+    createHeart();
 
 }, 900);
 
 
-// =====================================================
-// NO BUTTON
-// =====================================================
+/* =========================================================
+   FINAL SCREEN
+   ========================================================= */
 
-noBtn.addEventListener(
-    "click",
-    function (event) {
+function showFinalScreen() {
 
-        event.stopPropagation();
+    if (!isOpen) return;
 
-        if (gameFinished) {
-            return;
-        }
+    finalScreen.classList.add("show");
 
-        noClicks++;
-
-        // Shrink NO
-
-        noScale *= 0.72;
-
-        noScale =
-            Math.max(
-                0.22,
-                noScale
-            );
-
-        noBtn.style.transform =
-            `scale(${noScale})`;
+    createFinalParticles();
+}
 
 
-        // Sad cat
+/* =========================================================
+   FINAL PARTICLES
+   ========================================================= */
 
-        cat.classList.add("sad");
+function createFinalParticles() {
 
+    for (let i = 0; i < 30; i++) {
 
-        // Particle effect
+        const particle =
+            document.createElement("div");
 
-        const rect =
-            noBtn.getBoundingClientRect();
+        particle.className = "particle";
 
-        createParticles(
+        particle.style.left =
+            Math.random() * 100 + "%";
 
-            rect.left +
-            rect.width / 2,
+        particle.style.top =
+            60 + Math.random() * 30 + "%";
 
-            rect.top +
-            rect.height / 2,
+        particle.style.animationDuration =
+            (2 + Math.random() * 3) + "s";
 
-            22
-        );
-
-
-        // Return to normal
-
-        clearTimeout(
-            sadTimer
-        );
-
-        sadTimer =
-            setTimeout(() => {
-
-                cat.classList.remove(
-                    "sad"
-                );
-
-            }, 1300);
-
-
-        // After many NO clicks
-
-        if (noClicks >= 4) {
-
-            noBtn.style.opacity =
-                Math.max(
-                    0.45,
-                    1 -
-                    noClicks * 0.08
-                );
-        }
-    }
-);
-
-
-// =====================================================
-// YES BUTTON
-// =====================================================
-
-yesBtn.addEventListener(
-    "click",
-    function (event) {
-
-        event.stopPropagation();
-
-        if (gameFinished) {
-            return;
-        }
-
-        gameFinished = true;
-
-        clearTimeout(
-            sadTimer
-        );
-
-
-        // Explosion
-
-        const rect =
-            yesBtn.getBoundingClientRect();
-
-        createParticles(
-
-            rect.left +
-            rect.width / 2,
-
-            rect.top +
-            rect.height / 2,
-
-            100
-        );
-
-
-        // Card animation
-
-        card.style.opacity = "0";
-
-        card.style.transform =
-            `
-            translate(-50%, -50%)
-            scale(0.65)
-            rotateX(20deg)
-            `;
-
-
-        // Cat disappears
-
-        cat.style.opacity = "0";
-
-        cat.style.transform =
-            `
-            translate(-50%, -50%)
-            scale(0.6)
-            `;
-
+        particlesContainer.appendChild(particle);
 
         setTimeout(() => {
 
-            card.style.display =
-                "none";
+            particle.remove();
 
-            cat.style.display =
-                "none";
+        }, 5500);
+    }
+}
 
-            finalScreen.classList.remove(
-                "hidden"
+
+/* =========================================================
+   RESTART
+   ========================================================= */
+
+restartButton.addEventListener(
+    "click",
+    restartExperience
+);
+
+
+function restartExperience() {
+
+    clearInterval(typingTimer);
+
+    isOpen = false;
+
+    /* Hide final screen */
+    finalScreen.classList.remove("show");
+
+    /* Reset card */
+    cardWrapper.classList.remove("open");
+
+    /* Reset text */
+    typedText.textContent = "";
+
+    signature.classList.remove("visible");
+
+    /* Enable button */
+    openButton.disabled = false;
+
+    /* Small pause before allowing another opening */
+    setTimeout(() => {
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }, 100);
+}
+
+
+/* =========================================================
+   EXTRA STAR EFFECT
+   ========================================================= */
+
+const stars =
+    document.querySelectorAll(".stars");
+
+stars.forEach((layer, layerIndex) => {
+
+    const starCount =
+        layerIndex === 0 ? 45 :
+        layerIndex === 1 ? 30 :
+        20;
+
+    for (let i = 0; i < starCount; i++) {
+
+        const star =
+            document.createElement("span");
+
+        star.style.position =
+            "absolute";
+
+        star.style.left =
+            Math.random() * 100 + "%";
+
+        star.style.top =
+            Math.random() * 100 + "%";
+
+        const size =
+            1 + Math.random() * 2.5;
+
+        star.style.width =
+            size + "px";
+
+        star.style.height =
+            size + "px";
+
+        star.style.borderRadius =
+            "50%";
+
+        star.style.background =
+            "white";
+
+        star.style.opacity =
+            .15 + Math.random() * .85;
+
+        star.style.boxShadow =
+            "0 0 7px rgba(255,255,255,.8)";
+
+        star.style.animation =
+            `twinkle ${
+                2 + Math.random() * 5
+            }s ease-in-out infinite`;
+
+        star.style.animationDelay =
+            Math.random() * 5 + "s";
+
+        layer.appendChild(star);
+    }
+});
+
+
+/* =========================================================
+   TWINKLE ANIMATION
+   ========================================================= */
+
+const dynamicStyle =
+    document.createElement("style");
+
+dynamicStyle.textContent = `
+
+@keyframes twinkle {
+
+    0%, 100% {
+        opacity: .15;
+        transform: scale(.7);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.4);
+    }
+
+}
+
+`;
+
+document.head.appendChild(dynamicStyle);
+
+
+/* =========================================================
+   CURSOR MAGIC
+   ========================================================= */
+
+document.addEventListener(
+    "mousemove",
+    (event) => {
+
+        if (Math.random() > .92) {
+
+            createCursorParticle(
+                event.clientX,
+                event.clientY
             );
 
-        }, 700);
+        }
     }
 );
 
 
-// =====================================================
-// FINAL → RESET
-// =====================================================
+function createCursorParticle(x, y) {
 
-finalScreen.addEventListener(
-    "click",
-    resetGame
-);
+    const particle =
+        document.createElement("div");
 
+    particle.style.position =
+        "fixed";
 
-// =====================================================
-// RESET
-// =====================================================
+    particle.style.left =
+        x + "px";
 
-function resetGame() {
+    particle.style.top =
+        y + "px";
 
-    gameFinished = false;
+    particle.style.width = "3px";
+    particle.style.height = "3px";
 
-    noClicks = 0;
+    particle.style.borderRadius =
+        "50%";
 
-    noScale = 1;
+    particle.style.background =
+        "#d8ceff";
 
-    noBtn.style.transform =
-        "scale(1)";
+    particle.style.boxShadow =
+        "0 0 10px #b8a5ff";
 
-    noBtn.style.opacity =
-        "1";
+    particle.style.pointerEvents =
+        "none";
 
+    particle.style.zIndex =
+        "50";
 
-    cat.classList.remove(
-        "sad"
-    );
+    document.body.appendChild(particle);
 
+    particle.animate(
+        [
+            {
+                transform:
+                    "translate(-50%,-50%) scale(1)",
+                opacity: .8
+            },
 
-    cat.style.display =
-        "block";
+            {
+                transform:
+                    "translate(-50%,-100px) scale(0)",
+                opacity: 0
+            }
+        ],
+        {
+            duration: 700,
+            easing: "ease-out"
+        }
+    ).onfinish = () => {
 
-    cat.style.opacity =
-        "1";
+        particle.remove();
 
-    cat.style.transform =
-        `
-        translate(-50%, -50%)
-        scale(1)
-        `;
-
-
-    card.style.display =
-        "block";
-
-    card.style.opacity =
-        "1";
-
-    card.style.transform =
-        `
-        translate(-50%, -50%)
-        `;
-
-
-    finalScreen.classList.add(
-        "hidden"
-    );
-
-
-    particles = [];
+    };
 }
-
-
-// =====================================================
-// MAIN LOOP
-// =====================================================
-
-function animationLoop() {
-
-    drawSpace();
-
-    requestAnimationFrame(
-        animationLoop
-    );
-}
-
-
-// =====================================================
-// START
-// =====================================================
-
-resizeCanvas();
-
-animationLoop();
