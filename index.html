@@ -3,31 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#05050d">
 
-    <title>Little Surprise</title>
+    <title>I'm Sorry, Mahdia</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<main class="app">
+
     <!-- =========================
-         SPACE BACKGROUND
+         GALAXY BACKGROUND
     ========================== -->
 
-    <div class="space">
+    <div class="aurora aurora-a"></div>
+    <div class="aurora aurora-b"></div>
 
-        <div class="stars"></div>
-        <div class="stars stars-2"></div>
-        <div class="stars stars-3"></div>
+    <div class="stars stars-back"></div>
+    <div class="stars stars-mid"></div>
+    <div class="stars stars-front"></div>
 
-        <div class="nebula nebula-1"></div>
-        <div class="nebula nebula-2"></div>
+    <div class="shooting-stars"></div>
 
-        <div class="shooting-star star-1"></div>
-        <div class="shooting-star star-2"></div>
-        <div class="shooting-star star-3"></div>
 
+    <!-- =========================
+         TOP LABEL
+    ========================== -->
+
+    <div class="topbar">
+        <span class="top-dot"></span>
+        <span>A LITTLE SURPRISE</span>
+        <span class="top-line"></span>
     </div>
 
 
@@ -35,23 +43,41 @@
          MAIN SCENE
     ========================== -->
 
-    <main class="scene">
+    <section class="scene">
 
-        <!-- CAT -->
+        <div class="moon-glow"></div>
+
+
+        <!-- =====================
+             CSS CAT
+        ====================== -->
+
         <div class="cat" id="cat">
 
-            <div class="cat-ear left-ear"></div>
-            <div class="cat-ear right-ear"></div>
+            <div class="cat-ear cat-ear-left"></div>
+            <div class="cat-ear cat-ear-right"></div>
 
             <div class="cat-head">
 
-                <div class="eye left-eye"></div>
-                <div class="eye right-eye"></div>
+                <div class="cat-inner-ear left"></div>
+                <div class="cat-inner-ear right"></div>
 
-                <div class="nose"></div>
-
-                <div class="mouth">
+                <div class="cat-eye left">
                     <span></span>
+                </div>
+
+                <div class="cat-eye right">
+                    <span></span>
+                </div>
+
+                <div class="cat-brow left"></div>
+                <div class="cat-brow right"></div>
+
+                <div class="cat-nose"></div>
+
+                <div class="cat-mouth">
+                    <i></i>
+                    <i></i>
                 </div>
 
                 <div class="whisker w1"></div>
@@ -62,127 +88,274 @@
                 <div class="whisker w5"></div>
                 <div class="whisker w6"></div>
 
+                <div class="tear tear-left"></div>
+                <div class="tear tear-right"></div>
+
             </div>
 
-            <!-- PAWS -->
-            <div class="paw paw-left"></div>
-            <div class="paw paw-right"></div>
+
+            <div class="cat-body"></div>
+
+            <div class="cat-paw paw-left"></div>
+            <div class="cat-paw paw-right"></div>
 
         </div>
+
+
+        <!-- CARD SHADOW -->
+
+        <div class="card-shadow"></div>
 
 
         <!-- =========================
              CARD
         ========================== -->
 
-        <section class="card-wrapper" id="cardWrapper">
+        <div class="card-wrap" id="cardWrap">
 
             <div class="card" id="card">
 
-                <!-- FRONT -->
-                <div class="card-front">
 
-                    <div class="card-small-title">
-                        A LITTLE MESSAGE...
+                <!-- =====================
+                     FRONT
+                ====================== -->
+
+                <article class="card-face card-front">
+
+                    <div class="card-shine"></div>
+
+                    <div class="mini-label">
+                        <span></span>
+                        A LITTLE MESSAGE
                     </div>
 
+
                     <h1>
-                        I'm Sorry,
-                        <span>Mahdia</span>
+                        I'm Sorry,<br>
+                        <em>Mahdia</em>
                     </h1>
 
-                    <div class="card-line"></div>
 
-                    <p class="front-subtitle">
-                        I made something small for you.
+                    <p class="front-sub">
+                        I made something small to say something important.
                     </p>
 
-                    <button id="openButton">
-                        OPEN THE LETTER
-                        <span>→</span>
+
+                    <!-- SEAL -->
+
+                    <div class="seal">
+
+                        <div class="seal-ring"></div>
+
+                        <span>♥</span>
+
+                    </div>
+
+
+                    <!-- OPEN BUTTON -->
+
+                    <button
+                        id="openButton"
+                        class="primary-btn"
+                        type="button"
+                    >
+
+                        <span>OPEN THE LETTER</span>
+
+                        <b>→</b>
+
                     </button>
 
-                </div>
+
+                    <!-- FOOTER -->
+
+                    <div class="front-footer">
+
+                        <span>made with care</span>
+
+                        <span>✦</span>
+
+                        <span>just for this moment</span>
+
+                    </div>
+
+                </article>
 
 
-                <!-- LETTER -->
-                <div class="card-letter" id="letter">
+                <!-- =====================
+                     BACK / LETTER
+                ====================== -->
 
-                    <div class="letter-glow"></div>
+                <article class="card-face card-back">
 
-                    <div class="letter-content">
+                    <div class="letter-top">
 
-                        <div class="letter-label">
+                        <div class="mini-label">
+                            <span></span>
                             A LITTLE NOTE
                         </div>
 
-                        <h2>
-                            I'm Sorry, Mahdia
-                        </h2>
-
-                        <div class="letter-divider"></div>
-
-                        <p id="typedText"></p>
-
-                        <div class="signature" id="signature">
-                            — From someone who cares 💜
+                        <div class="letter-mark">
+                            ✦
                         </div>
 
                     </div>
 
-                </div>
+
+                    <h2>
+                        I'm Sorry, Mahdia
+                    </h2>
+
+
+                    <div class="divider">
+
+                        <i></i>
+
+                        <span>♥</span>
+
+                        <i></i>
+
+                    </div>
+
+
+                    <!-- LETTER -->
+
+                    <div class="letter-window">
+
+                        <p
+                            id="typedText"
+                            class="typed-text"
+                        ></p>
+
+                        <span
+                            id="typingCursor"
+                            class="typing-cursor"
+                        ></span>
+
+                    </div>
+
+
+                    <!-- SIGNATURE -->
+
+                    <div
+                        class="signature"
+                        id="signature"
+                    >
+                        <span>
+                            — with a sincere apology
+                        </span>
+                    </div>
+
+
+                    <div class="letter-footer">
+                        Some things are better said gently.
+                    </div>
+
+                </article>
 
             </div>
 
-        </section>
+        </div>
+
+    </section>
 
 
-        <!-- =========================
-             FLOATING PARTICLES
-        ========================== -->
+    <!-- =========================
+         PARTICLES
+    ========================== -->
 
-        <div class="particles" id="particles"></div>
-
-    </main>
+    <div
+        id="particleLayer"
+        class="particle-layer"
+    ></div>
 
 
     <!-- =========================
          FINAL SCREEN
     ========================== -->
 
-    <div class="final-screen" id="finalScreen">
+    <section
+        id="finalScreen"
+        class="final-screen"
+        aria-hidden="true"
+    >
 
-        <div class="final-glow"></div>
+        <div class="final-orbit orbit-a"></div>
+        <div class="final-orbit orbit-b"></div>
 
-        <div class="final-content">
 
-            <div class="final-icon">
+        <div class="final-card">
+
+            <div class="final-spark">
                 ✦
             </div>
+
+
+            <div class="mini-label">
+                <span></span>
+                THANK YOU
+            </div>
+
 
             <h2>
                 Thank you for reading.
             </h2>
 
+
             <p>
-                Sometimes a little surprise
-                can say what words can't.
+                I hope this little surprise
+                made things a tiny bit brighter.
             </p>
 
+
             <div class="final-hearts">
-                💜 ✨ 💜
+
+                <span>♥</span>
+                <span>♥</span>
+                <span>♥</span>
+
             </div>
 
-            <button id="restartButton">
+
+            <button
+                id="restartButton"
+                class="secondary-btn"
+                type="button"
+            >
                 START AGAIN ↻
             </button>
 
         </div>
 
+    </section>
+
+
+    <!-- =========================
+         BOTTOM HINT
+    ========================== -->
+
+    <div
+        class="bottom-hint"
+        id="bottomHint"
+    >
+
+        <span class="mouse-icon">
+            <i></i>
+        </span>
+
+        <span>
+            click to open
+        </span>
+
     </div>
 
 
-    <script src="script.js"></script>
+</main>
+
+
+<!-- JAVASCRIPT -->
+
+<script src="script.js"></script>
 
 </body>
 </html>
